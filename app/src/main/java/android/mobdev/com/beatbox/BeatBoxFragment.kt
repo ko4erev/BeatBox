@@ -1,7 +1,6 @@
 package android.mobdev.com.beatbox
 
 
-import android.arch.lifecycle.ViewModel
 import android.databinding.DataBindingUtil.inflate
 import android.mobdev.com.beatbox.databinding.FragmentBeatBoxBinding
 import android.os.Bundle

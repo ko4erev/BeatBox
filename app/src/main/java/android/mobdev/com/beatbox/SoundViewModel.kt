@@ -2,6 +2,7 @@ package android.mobdev.com.beatbox
 
 import android.databinding.BaseObservable
 import android.databinding.Bindable
+import android.databinding.BindingAdapter
 
 class SoundViewModel : BaseObservable {
     private var mSound: Sound? = null
@@ -11,6 +12,11 @@ class SoundViewModel : BaseObservable {
         mBeatBox = beatBox
     }
 
+    @BindingAdapter("android:title")
+    fun getTitle(): String {
+        return mSound?.getName().toString()
+    }
+
     fun getSound(): Sound? {
         return mSound
     }
@@ -18,10 +24,5 @@ class SoundViewModel : BaseObservable {
     fun setSound(sound: Sound) {
         mSound = sound
         notifyChange()
-    }
-
-    @Bindable
-    fun getTitle(): String {
-        return mSound?.getName().toString()
     }
 }
