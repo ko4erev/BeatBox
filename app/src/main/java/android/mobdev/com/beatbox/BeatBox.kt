@@ -2,20 +2,34 @@ package android.mobdev.com.beatbox
 
 import android.content.Context
 import android.content.res.AssetManager
+import android.media.AudioManager
 import android.util.Log
 import java.io.IOException
+import android.media.SoundPool
 
 
-class BeatBox {
+open class BeatBox {
 
     private val TAG = "BeatBox"
     private val SOUNDS_FOLDER = "sample_sounds"
+    private val MAX_SOUNDS = 5
     private var mAssets: AssetManager? = null
     private val mSounds = ArrayList<Sound>()
+    private var mSoundPool: SoundPool? = null
 
     constructor(context: Context) {
         mAssets = context.assets
         loadSounds()
+        mSoundPool = SoundPool(MAX_SOUNDS, AudioManager.STREAM_MUSIC, 0)
+    }
+
+    fun play(sound: Sound) {
+        val soundId = sound.getSoundId() ?: return
+        mSoundPool?.play(soundId, 1.0F, 1.0F, 1, 0, 1.0F)
+    }
+
+    fun release() {
+        mSoundPool?.release()
     }
 
     private fun loadSounds() {
@@ -28,10 +42,21 @@ class BeatBox {
             return
         }
         for (filename in soundNames) {
-            val assetPath = "$SOUNDS_FOLDER/$filename"
-            val sound = Sound(assetPath)
-            mSounds.add(sound)
+            try {
+                val assetPath = "$SOUNDS_FOLDER/$filename"
+                val sound = Sound(assetPath)
+                load(sound)
+                mSounds.add(sound)
+            } catch (ioe: IOException) {
+                Log.e(TAG, "Could not load sound $filename", ioe)
+            }
         }
+    }
+
+    private fun load(sound: Sound) {
+        val afd = mAssets?.openFd(sound.getAssetPath())
+        val soundId = mSoundPool?.load(afd, 1)
+        soundId?.let { sound.setSoundId(it) }
     }
 
     fun getSounds(): ArrayList<Sound> {

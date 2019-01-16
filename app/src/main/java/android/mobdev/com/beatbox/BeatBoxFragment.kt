@@ -36,6 +36,11 @@ class BeatBoxFragment : Fragment() {
         return binding.root
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        mBeatBox?.release()
+    }
+
     private inner class SoundHolder(private val mBinding: ListItemSoundBinding) :
         RecyclerView.ViewHolder(mBinding.root) {
         init {

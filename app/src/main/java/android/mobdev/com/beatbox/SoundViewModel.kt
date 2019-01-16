@@ -1,7 +1,6 @@
 package android.mobdev.com.beatbox
 
 import android.databinding.BaseObservable
-import android.databinding.Bindable
 import android.databinding.BindingAdapter
 
 class SoundViewModel : BaseObservable {
@@ -24,5 +23,9 @@ class SoundViewModel : BaseObservable {
     fun setSound(sound: Sound) {
         mSound = sound
         notifyChange()
+    }
+
+    fun onButtonClicked() {
+        mSound?.let { mBeatBox?.play(it) }
     }
 }
