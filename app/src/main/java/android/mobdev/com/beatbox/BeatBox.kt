@@ -20,13 +20,11 @@ open class BeatBox {
     constructor(context: Context) {
         mAssets = context.assets
         loadSounds()
-        print("")
     }
 
     fun play(sound: Sound) {
         val soundId = sound.getSoundId() ?: return
         mSoundPool?.play(soundId, 1.0F, 1.0F, 1, 0, 1.0F)
-        print("")
     }
 
     fun release() {

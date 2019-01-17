@@ -26,6 +26,7 @@ class BeatBoxFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        retainInstance = true
         mBeatBox = activity?.let { BeatBox(it) }
     }
 
