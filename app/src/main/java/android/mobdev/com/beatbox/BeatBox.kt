@@ -15,17 +15,18 @@ open class BeatBox {
     private val MAX_SOUNDS = 5
     private var mAssets: AssetManager? = null
     private val mSounds = ArrayList<Sound>()
-    private var mSoundPool: SoundPool? = null
+    private var mSoundPool = SoundPool(MAX_SOUNDS, AudioManager.STREAM_MUSIC, 0)
 
     constructor(context: Context) {
         mAssets = context.assets
         loadSounds()
-        mSoundPool = SoundPool(MAX_SOUNDS, AudioManager.STREAM_MUSIC, 0)
+        print("")
     }
 
     fun play(sound: Sound) {
         val soundId = sound.getSoundId() ?: return
         mSoundPool?.play(soundId, 1.0F, 1.0F, 1, 0, 1.0F)
+        print("")
     }
 
     fun release() {
